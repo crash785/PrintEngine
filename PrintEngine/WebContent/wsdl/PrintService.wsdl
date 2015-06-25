@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://service.printengine.whitecoast.ch" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://service.printengine.whitecoast.ch" xmlns:intf="http://service.printengine.whitecoast.ch" xmlns:tns1="http://objects.printengine.whitecoast.ch" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://service.printengine.whitecoast.ch" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://objects.printengine.whitecoast.ch"/>
+   <element name="getDocument">
+    <complexType>
+     <sequence>
+      <element name="request" type="tns1:PrintRequestObj"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="ArrayOf_xsd_string">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="ArrayOf_tns1_Value">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="tns1:Value"/>
+    </sequence>
+   </complexType>
+   <complexType name="ArrayOf_tns1_ValueMap">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="tns1:ValueMap"/>
+    </sequence>
+   </complexType>
+   <element name="getDocumentResponse">
+    <complexType>
+     <sequence>
+      <element name="getDocumentReturn" type="tns1:PrintResponseObj"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://objects.printengine.whitecoast.ch" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://service.printengine.whitecoast.ch"/>
+   <complexType name="Value">
+    <sequence>
+     <element name="asList" type="xsd:boolean"/>
+     <element name="key" nillable="true" type="xsd:string"/>
+     <element name="prefix" nillable="true" type="xsd:string"/>
+     <element name="suffix" nillable="true" type="xsd:string"/>
+     <element name="values" nillable="true" type="impl:ArrayOf_xsd_string"/>
+    </sequence>
+   </complexType>
+   <complexType name="ValueMap">
+    <sequence>
+     <element name="valueMap" nillable="true" type="impl:ArrayOf_tns1_Value"/>
+    </sequence>
+   </complexType>
+   <complexType name="PrintRequestObj">
+    <sequence>
+     <element name="fileData" nillable="true" type="xsd:base64Binary"/>
+     <element name="fileType" nillable="true" type="xsd:string"/>
+     <element name="responseType" nillable="true" type="xsd:string"/>
+     <element name="valueMaps" nillable="true" type="impl:ArrayOf_tns1_ValueMap"/>
+    </sequence>
+   </complexType>
+   <complexType name="PrintResponseObj">
+    <sequence>
+     <element name="fileData" nillable="true" type="xsd:base64Binary"/>
+     <element name="fileType" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="getDocumentResponse">
+
+      <wsdl:part element="impl:getDocumentResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getDocumentRequest">
+
+      <wsdl:part element="impl:getDocument" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="PrintService">
+
+      <wsdl:operation name="getDocument">
+
+         <wsdl:input message="impl:getDocumentRequest" name="getDocumentRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getDocumentResponse" name="getDocumentResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="PrintServiceSoapBinding" type="impl:PrintService">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getDocument">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getDocumentRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getDocumentResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="PrintServiceService">
+
+      <wsdl:port binding="impl:PrintServiceSoapBinding" name="PrintService">
+
+         <wsdlsoap:address location="http://localhost:8080/PrintEngine/services/PrintService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

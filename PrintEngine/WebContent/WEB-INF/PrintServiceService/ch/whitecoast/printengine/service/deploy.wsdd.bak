@@ -1,0 +1,82 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from PrintServiceService WSDL service -->
+
+  <service name="PrintService" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://service.printengine.whitecoast.ch"/>
+      <parameter name="wsdlServiceElement" value="PrintServiceService"/>
+      <parameter name="schemaQualified" value="http://objects.printengine.whitecoast.ch,http://service.printengine.whitecoast.ch"/>
+      <parameter name="wsdlServicePort" value="PrintService"/>
+      <parameter name="className" value="ch.whitecoast.printengine.service.PrintServiceSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="PrintService"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="getDocument" qname="operNS:getDocument" xmlns:operNS="http://service.printengine.whitecoast.ch" returnQName="retNS:getDocumentReturn" xmlns:retNS="http://service.printengine.whitecoast.ch" returnType="rtns:PrintResponseObj" xmlns:rtns="http://objects.printengine.whitecoast.ch" soapAction="" >
+        <parameter qname="pns:request" xmlns:pns="http://service.printengine.whitecoast.ch" type="tns:PrintRequestObj" xmlns:tns="http://objects.printengine.whitecoast.ch"/>
+      </operation>
+      <parameter name="allowedMethods" value="getDocument"/>
+
+      <typeMapping
+        xmlns:ns="http://objects.printengine.whitecoast.ch"
+        qname="ns:ValueMap"
+        type="java:ch.whitecoast.printengine.objects.ValueMap"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://objects.printengine.whitecoast.ch"
+        qname="ns:PrintRequestObj"
+        type="java:ch.whitecoast.printengine.objects.PrintRequestObj"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <arrayMapping
+        xmlns:ns="http://service.printengine.whitecoast.ch"
+        qname="ns:ArrayOf_xsd_string"
+        type="java:java.lang.String[]"
+        innerType="cmp-ns:string" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema"
+        encodingStyle=""
+      />
+      <arrayMapping
+        xmlns:ns="http://service.printengine.whitecoast.ch"
+        qname="ns:ArrayOf_tns1_ValueMap"
+        type="java:ch.whitecoast.printengine.objects.ValueMap[]"
+        innerType="cmp-ns:ValueMap" xmlns:cmp-ns="http://objects.printengine.whitecoast.ch"
+        encodingStyle=""
+      />
+      <arrayMapping
+        xmlns:ns="http://service.printengine.whitecoast.ch"
+        qname="ns:ArrayOf_tns1_Value"
+        type="java:ch.whitecoast.printengine.objects.Value[]"
+        innerType="cmp-ns:Value" xmlns:cmp-ns="http://objects.printengine.whitecoast.ch"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://objects.printengine.whitecoast.ch"
+        qname="ns:Value"
+        type="java:ch.whitecoast.printengine.objects.Value"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://objects.printengine.whitecoast.ch"
+        qname="ns:PrintResponseObj"
+        type="java:ch.whitecoast.printengine.objects.PrintResponseObj"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+  </service>
+</deployment>
